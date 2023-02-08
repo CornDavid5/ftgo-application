@@ -88,3 +88,18 @@ ftgoJsonSchema2Pojo {
     }
 
 }
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('jacoco')
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+}

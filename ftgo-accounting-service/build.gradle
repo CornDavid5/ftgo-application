@@ -1,6 +1,5 @@
 apply plugin: FtgoServicePlugin
 
-
 dependencies {
 
     compile project(":ftgo-accounting-service-api")
@@ -21,11 +20,11 @@ dependencies {
     compile "io.eventuate.local.java:eventuate-client-java-spring"
     compile "io.eventuate.local.java:eventuate-client-java-spring-jdbc"
     compile "io.eventuate.local.java:eventuate-local-java-spring-jdbc"
-    
+
     compile('org.apache.kafka:kafka-clients:2.3.0') {
         force = true
     }
-    
+
     testCompile "io.eventuate.tram.core:eventuate-tram-spring-in-memory"
     testCompile "io.eventuate.util:eventuate-util-test"
     testCompile "io.eventuate.tram.core:eventuate-tram-test-util"
@@ -35,4 +34,19 @@ dependencies {
     testCompile "com.jayway.restassured:rest-assured:$restAssuredVersion"
     testCompile "com.jayway.jsonpath:json-path:2.3.0"
 
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('jacoco')
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }

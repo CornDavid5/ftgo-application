@@ -138,12 +138,12 @@ eclipse {
 
 dependencies {
 
-    compile ("io.netty:netty-codec-http2:4.1.72.Final")  
-    compile ("io.netty:netty-codec:4.1.72.Final")  
-    compile ("io.netty:netty-transport:4.1.72.Final")  
-    compile ("io.netty:netty-common:4.1.72.Final")  
-    compile ("io.netty:netty-buffer:4.1.72.Final")  
-    compile ("io.netty:netty-resolver:4.1.72.Final")  
+    compile ("io.netty:netty-codec-http2:4.1.72.Final")
+    compile ("io.netty:netty-codec:4.1.72.Final")
+    compile ("io.netty:netty-transport:4.1.72.Final")
+    compile ("io.netty:netty-common:4.1.72.Final")
+    compile ("io.netty:netty-buffer:4.1.72.Final")
+    compile ("io.netty:netty-resolver:4.1.72.Final")
 
     ftgoApiSpecification project(":ftgo-consumer-service-api-spec")
     ftgoApiSpecification project(":ftgo-accounting-service-api-spec")
@@ -182,7 +182,7 @@ dependencies {
 
     compile('org.apache.kafka:kafka-clients:2.3.0') {
         force = true
-    }    
+    }
 
     testCompile "io.eventuate.util:eventuate-util-test"
     testCompile "io.eventuate.tram.core:eventuate-tram-test-util"
@@ -241,4 +241,19 @@ ftgoJsonSchema2Pojo {
         useLongIntegers = true
     }
 
+}
+
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+    reportsDirectory = layout.buildDirectory.dir('jacoco')
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
 }
